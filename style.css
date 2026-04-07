@@ -1,0 +1,25 @@
+@import url('https://use.typekit.net/myw1mdt.css');
+
+:root {
+  /* Fonts */
+  --font-sans: "azo-mono", monospace;
+  --font-mono: "azo-mono", monospace;
+  --font-display: "azo-sans-web", sans-serif;
+  --font-display-uber: "azo-sans-uber", sans-serif;
+
+  /* Colors */
+  --color-blue-dark: #07223C;
+  --color-blue: #0A3055;
+  --color-blue-light: #476480;
+
+  --color-magenta-dark: #9D0054;
+  --color-magenta: #B6407F;
+  --color-magenta-light: #E7BFD4;
+
+  --color-cyan: #00BBF9;
+  --color-cyan-light: #7EDCFC;
+
+  --color-yellow: #FFEE88;
+  --color-gray: #CED6DD;
+  --color-white: #FFFFFF;
+}

@@ -1,0 +1,16 @@
+{
+  "name": "slidev-theme-openedx-con-2026",
+  "version": "1.0.0",
+  "keywords": [
+    "slidev-theme",
+    "slidev"
+  ],
+  "slidev": {
+    "defaults": {
+      "fonts": {
+        "sans": "azo-sans-web",
+        "mono": "azo-mono"
+      }
+    }
+  }
+}
