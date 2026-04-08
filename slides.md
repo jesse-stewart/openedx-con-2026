@@ -146,7 +146,6 @@ Write the test once. Get everything else for (almost) free.
 
 ---
 
-````md magic-move {lines: true}
 ```ts
 // Vanilla Playwright — one output: pass/fail
 import { test } from '@playwright/test';
@@ -159,8 +158,104 @@ test('user can log in', async ({ page }) => {
 });
 ```
 
+---
+layout: two-cols-aside
+---
+
+::aside::
+<h1 text-2xl!>Running Tests</h1>
+
+Run tests headlessly, with a visible browser, in an interactive UI, or with the debugger attached.
+
+```bash
+# Run all tests
+npm test
+
+ # With visible browser
+npm run test:headed
+
+# Interactive UI mode
+npm run test:ui
+
+# With debugger
+npm run test:debug
+
+```
+
+::default::
+<div class="aspect-square bg-gray">[VIDEO]</div>
+
+---
+layout: two-cols-aside
+---
+
+::aside::
+<h1 text-2xl!>Test Results</h1>
+
+Rich HTML reports with screenshots, traces, and test results. Open in your browser to drill into failures.
+
+```bash
+# View Playwright HTML report
+npm run report
+```
+
+::default::
+<div class="aspect-square bg-gray">[VIDEO]</div>
+
+---
+
+````md magic-move {lines: true}
 ```ts
-// assertA11y — now also runs an accessibility audit
+// Vanilla Playwright
+import { test } from '@playwright/test';
+
+test('user can log in', async ({ page }) => {
+  await page.goto('/login');
+  await page.fill('#username', process.env.TEST_USERNAME!);
+  await page.fill('#password', process.env.TEST_PASSWORD!);
+  await page.click('button[name="sign-in"]');
+});
+```
+
+```ts
+// + assertA11y — now also runs an accessibility audit
+import { test } from '@playwright/test';
+import { assertA11y } from 'openedx-e2e-tests';
+
+test('user can log in', async ({ page }) => {
+  await page.goto('/login');
+  
+  await assertA11y(page, { report: true }, testInfo);
+
+  await page.fill('#username', process.env.TEST_USERNAME!);
+  await page.fill('#password', process.env.TEST_PASSWORD!);
+  await page.click('button[name="sign-in"]');
+});
+```
+````
+
+---
+layout: two-cols-aside
+---
+
+::aside::
+<h1 text-2xl!>A11y Test Results</h1>
+
+Violations are compiled into a dedicated report with screenshots, descriptions, and remediation guidance.
+
+```bash
+# View accessibility reports
+npm run report:a11y
+```
+
+::default::
+<div class="aspect-square bg-gray">[VIDEO]</div>
+
+---
+
+````md magic-move {lines: true}
+```ts
+// assertA11y
 import { test } from '@playwright/test';
 import { assertA11y } from 'openedx-e2e-tests';
 
@@ -177,6 +272,46 @@ test('user can log in', async ({ page }) => {
 
 ```ts
 // + Testdoc — now generates annotated documentation too
+import { test } from '@playwright/test';
+import { assertA11y, TestdocTest } from 'openedx-e2e-tests';
+
+test('user can log in', async ({ page }, testInfo) => {
+  const testdoc = new TestdocTest(page, 'user-login', {
+    title: 'How to Log In',
+    overview: 'This guide shows you how to log into Open edX.',
+  });
+
+  await testdoc.initialize();
+  await page.goto('/login');
+
+  await assertA11y(page, { report: true }, testInfo);
+
+  await testdoc.fill('#username', process.env.TEST_USERNAME!, 'Enter Username');
+  await testdoc.fill('#password', process.env.TEST_PASSWORD!, 'Enter Password');
+  await testdoc.click('button[name="sign-in"]', 'Submit Login');
+
+  await testdoc.generateMarkdown();
+});
+```
+````
+
+---
+layout: two-cols-aside
+---
+
+::aside::
+<h1 text-2xl!>Generated Documentation</h1>
+
+Pixel-by-pixel comparison against a stored baseline. Differences are flagged with red-highlighted diffs.
+
+::default::
+<div class="aspect-square bg-gray">[VIDEO]</div>
+
+---
+
+````md magic-move {lines: true}
+```ts
+// Testdoc
 import { test } from '@playwright/test';
 import { assertA11y, TestdocTest } from 'openedx-e2e-tests';
 
@@ -226,82 +361,6 @@ test('user can log in', async ({ page }, testInfo) => {
 ```
 ````
 
-<!--
-Start with the vanilla test.
-
-Click to step 2: one import, one call to assertA11y.
-Now every test run is also an accessibility audit — violations get flagged with visual evidence, ready to drop into a ticket.
-
-Click to step 3: we wrap interactions in TestdocTest.
-Same test logic, but now every click and fill captures an annotated screenshot and builds a user guide automatically.
-
-Click to step 4: add VisualRegression.
-Now we're comparing pixels on every run. If a shared CSS variable changes and breaks the layout, this catches it — even if all the functional assertions still pass.
-
-Same test, a bit more code, with a ton of added value.
--->
-
----
-layout: two-cols-aside
----
-
-::aside::
-<h1 text-2xl!>Running Tests</h1>
-
-Run tests headlessly, with a visible browser, in an interactive UI, or with the debugger attached.
-
-```bash
-# Run all tests
-npm test
-
- # With visible browser
-npm run test:headed
-
-# Interactive UI mode
-npm run test:ui
-
-# With debugger
-npm run test:debug
-
-```
-
-::default::
-<div class="aspect-square bg-gray">[VIDEO]</div>
-
----
-layout: two-cols-aside
----
-
-::aside::
-<h1 text-2xl!>Test Results</h1>
-
-Rich HTML reports with screenshots, traces, and test results. Open in your browser to drill into failures.
-
-```bash
-# View Playwright HTML report
-npm run report
-```
-
-::default::
-<div class="aspect-square bg-gray">[VIDEO]</div>
-
----
-layout: two-cols-aside
----
-
-::aside::
-<h1 text-2xl!>A11y Test Results</h1>
-
-Violations are compiled into a dedicated report with screenshots, descriptions, and remediation guidance.
-
-```bash
-# View accessibility reports
-npm run report:a11y
-```
-
-::default::
-<div class="aspect-square bg-gray">[VIDEO]</div>
-
 ---
 layout: two-cols-aside
 ---
@@ -319,6 +378,8 @@ layout: api-section
 ---
 
 # Generating Documentation
+
+Powered by `@playwright/test`
 
 ---
 
@@ -347,6 +408,19 @@ const testdoc = new TestdocTest(page, 'user-login', {
 await testdoc.initialize();
 ```
 ````
+---
+layout: full
+---
+<pre class="aspect-video bg-gray">[SCREENSHOT]
+TestdocTest(
+  title
+  overview
+  prerequisites
+  notes
+  relatedTopics
+  showNumbers
+)
+</pre>
 
 ---
 
@@ -397,23 +471,25 @@ await testdoc.click({
   elementOnly: true,
 });
 ```
+````
+---
+layout: full
+---
 
+<pre class="aspect-video bg-gray">[SCREENSHOT] 
+testdoc.step
+testdoc.fill
+testdoc.click
+</pre>
+
+---
+
+````md magic-move {lines: true}
 ```ts
 // screenshot() + note() + generate output
 await testdoc.step({ title: 'Navigate to the login page' });
 
-await testdoc.fill({
-  selector: 'input[name="email"]',
-  value: 'user@example.com',
-  title: 'Enter your email address',
-  elementOnly: true,
-});
-
-await testdoc.click({
-  selector: 'button[type="submit"]',
-  title: 'Click Sign In',
-  elementOnly: true,
-});
+...
 
 await testdoc.screenshot({
   title: 'Dashboard loaded',
@@ -428,14 +504,41 @@ await testdoc.generateRST();       // → documentation.rst
 ````
 
 ---
+layout: full
+---
+
+<div class="grid grid-cols-3" style="--slidev-code-font-size: 0.5rem; --slidev-code-line-height:0.625rem;">
+<div class="h-full">
+
+```rst
+######################
+RST
+######################
+```
+
+</div>
+<pre class="h-full bg-gray">[SCREENSHOT] 
+[Preview]
+</pre>
+<div class="h-full">
+
+```md
+# markdown
+```
+
+</div>
+</div>
+
+---
 layout: api-section
 ---
 
 # A11y Tests
 
+Powered by `@axe-core/playwright`
+
 ---
 
-````md magic-move {lines: true}
 ```ts
 // checkA11y — returns results, never throws
 import { checkA11y } from 'openedx-e2e-tests';
@@ -445,6 +548,14 @@ const results = await checkA11y(page);
 console.log(`Violations: ${results.violations.length}`);
 console.log(`Passes: ${results.passes.length}`);
 ```
+---
+layout: full
+---
+<pre class="aspect-video bg-gray">[SCREENSHOT]
+checkA11y
+console.log
+</pre>
+---
 
 ```ts
 // assertA11y — throws on violations
@@ -456,6 +567,14 @@ test('login page is accessible', async ({ page }, testInfo) => {
   await assertA11y(page, {}, testInfo);
 });
 ```
+---
+layout: full
+---
+<pre class="aspect-video bg-gray">[SCREENSHOT]
+checkA11y
+assertA11y
+</pre>
+---
 
 ```ts
 // warnOnly — log instead of throw (good for onboarding)
@@ -467,6 +586,15 @@ test('login page is accessible', async ({ page }, testInfo) => {
   }, testInfo);
 });
 ```
+---
+layout: full
+---
+<pre class="aspect-video bg-gray">[SCREENSHOT]
+checkA11y
+assertA11y
+warnOnly
+</pre>
+---
 
 ```ts
 // report — auto-generate HTML report after each run
@@ -480,6 +608,13 @@ test('login page is accessible', async ({ page }, testInfo) => {
   }, testInfo);
 });
 ```
+---
+layout: full
+---
+<pre class="aspect-video bg-gray">[SCREENSHOT]
+report
+</pre>
+---
 
 ```ts
 // disabledRules + exclude — fine-tune what gets scanned
@@ -495,13 +630,36 @@ test('login page is accessible', async ({ page }, testInfo) => {
   }, testInfo);
 });
 ```
-````
 
 ---
 layout: api-section
 ---
 
 # Visual Regression
+
+Powered by `pixelmatch`
+
+---
+
+```ts
+// Basic setup — first run creates the baseline
+import { VisualRegression } from 'openedx-e2e-tests';
+
+test('login page looks right', async ({ page }, testInfo) => {
+  const vr = new VisualRegression(page, testInfo);
+
+  await page.goto('/login');
+  await vr.captureAndCompare({ name: 'login-page' });
+});
+```
+
+---
+layout: full
+---
+
+<pre class="aspect-video bg-gray">[SCREENSHOT]
+captureAndCompare
+</pre>
 
 ---
 
@@ -519,7 +677,20 @@ test('login page looks right', async ({ page }, testInfo) => {
 ```
 
 ```ts
-// fullPage + mask — exclude dynamic content from comparison
+// + fullPage — capture the entire scrollable page
+test('login page looks right', async ({ page }, testInfo) => {
+  const vr = new VisualRegression(page, testInfo);
+
+  await page.goto('/login');
+  await vr.captureAndCompare({
+    name: 'login-page',
+    fullPage: true,
+  });
+});
+```
+
+```ts
+// + mask — exclude dynamic content from comparison
 test('login page looks right', async ({ page }, testInfo) => {
   const vr = new VisualRegression(page, testInfo);
 
@@ -533,7 +704,7 @@ test('login page looks right', async ({ page }, testInfo) => {
 ```
 
 ```ts
-// threshold — tune sensitivity for font rendering differences
+// + threshold — tune sensitivity for font rendering differences
 test('login page looks right', async ({ page }, testInfo) => {
   const vr = new VisualRegression(page, testInfo);
 
@@ -546,36 +717,16 @@ test('login page looks right', async ({ page }, testInfo) => {
   });
 });
 ```
-
-```ts
-// updateBaseline — accept intentional UI changes
-test('login page looks right', async ({ page }, testInfo) => {
-  const vr = new VisualRegression(page, testInfo);
-
-  await page.goto('/login');
-  await vr.updateBaseline({
-    name: 'login-page',
-    fullPage: true,
-    mask: ['.timestamp'],
-  });
-});
-```
-
-```ts
-// assertVisualRegression — convenience shorthand
-import { assertVisualRegression } from 'openedx-e2e-tests';
-
-test('login page looks right', async ({ page }, testInfo) => {
-  await page.goto('/login');
-
-  await assertVisualRegression(page, testInfo, {
-    name: 'login-page',
-    fullPage: true,
-    mask: ['.timestamp'],
-  });
-});
-```
 ````
+---
+layout: full
+---
+
+<pre class="aspect-video bg-gray">[SCREENSHOT]
+captureAndCompare
+threshold
+</pre>
+
 ---
 layout: api-section
 ---
