@@ -28,7 +28,6 @@ E2E tests are expensive. Three kinds of expensive.
 <div v-click>
 
 **Creation Cost** — Time and expertise that most organizations don't have in abundance.
-.
 
 </div>
 
@@ -57,11 +56,11 @@ level: 2
 
 # More Problems
 
-But wait, there's more problems.
+But wait, there's more!
 
 <div v-click>
 
-**Accessibility** — Audits are usually manual and don't happen often enough. Violations accumulate over time without being fixed
+**Accessibility** — Audits are usually manual and don't happen often enough. Violations accumulate over time without being fixed.
 
 </div>
 
@@ -90,7 +89,7 @@ level: 2
 
 # The Solution
 
-The parts of Open edX worth **documenting** are almost always the parts worth writing **E2E tests** for. So why maintain multiple separate efforts?
+The parts of Open edX worth **documenting** are almost always the parts worth writing **E2E, A11y, and Visual Regression tests** for. So why maintain multiple separate efforts?
 
 <div class="mt-6" v-click>
 Introducing:
@@ -183,7 +182,7 @@ npm run test:debug
 ```
 
 ::default::
-<div class="aspect-square bg-gray">[VIDEO]</div>
+<video src="/video/08-running-tests.mov" autoplay loop muted class="aspect-square"></video>
 
 ---
 layout: two-cols-aside
@@ -200,7 +199,7 @@ npm run report
 ```
 
 ::default::
-<div class="aspect-square bg-gray">[VIDEO]</div>
+<video src="/video/09-test-results.mov" autoplay loop muted class="aspect-square"></video>
 
 ---
 
@@ -249,7 +248,7 @@ npm run report:a11y
 ```
 
 ::default::
-<div class="aspect-square bg-gray">[VIDEO]</div>
+<video src="/video/11-a11y-test-results.mov" autoplay loop muted class="aspect-square"></video>
 
 ---
 
@@ -305,7 +304,7 @@ layout: two-cols-aside
 Pixel-by-pixel comparison against a stored baseline. Differences are flagged with red-highlighted diffs.
 
 ::default::
-<div class="aspect-square bg-gray">[VIDEO]</div>
+<video src="/video/13-generated-documentation.mov" autoplay loop muted class="aspect-square"></video>
 
 ---
 
