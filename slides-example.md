@@ -251,16 +251,16 @@ Run tests headlessly, with a visible browser, in an interactive UI, or with the 
 
 ```bash
 # Run all tests
-npm test
+playwright test
 
  # With visible browser
-npm run test:headed
+playwright test --headed
 
 # Interactive UI mode
-npm run test:ui
+playwright test --ui
 
 # With debugger
-npm run test:debug
+playwright test --debug
 
 ```
 
@@ -278,7 +278,7 @@ Rich HTML reports with screenshots, traces, and test results. Open in your brows
 
 ```bash
 # View Playwright HTML report
-npm run report
+playwright show-report artifacts/playwright-report
 ```
 
 ::default::

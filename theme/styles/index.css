@@ -9,7 +9,7 @@
   --font-display-uber:  "azo-sans-uber", sans-serif;
 
   --color-blue-dark:    #07223C;
-  --color-blue:         #0A3055;
+  --color-blue:         #092B4D;
   --color-blue-light:   #476480;
 
   --color-magenta-dark: #9D0054;
@@ -192,4 +192,89 @@
 /* ── Code blocks (shiki) ──────────────────────────────────── */
 .slidev-code {
   border-radius: 6px;
+}
+
+/* Utility: bump code block size locally. Apply on a wrapper div or via code-block `class:'code-lg'` directive. */
+.code-lg {
+  --slidev-code-font-size: 1.15rem;
+  --slidev-code-line-height: 1.6rem;
+}
+
+/* ── Visual regression slideshow ──────────────────────────── */
+.vr-slideshow {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  border: 1px solid #d1d5db;
+  background: #f3f4f6;
+}
+
+.vr-slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  clip-path: inset(0 0 0 0);
+  transition: clip-path 0.7s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.vr-slide.slidev-vclick-hidden {
+  opacity: 1 !important;
+  visibility: visible !important;
+  clip-path: inset(0 100% 0 0);
+}
+
+.vr-slideshow img {
+  position: static;
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  border-radius: 0.5rem;
+  background: #e5e7eb;
+}
+
+.vr-caption {
+  position: static;
+  padding: 0.35rem 0.5rem;
+  border-radius: 0.375rem;
+  background: rgba(17, 24, 39, 0.92);
+  color: #f3f4f6;
+  font-size: 0.75rem;
+  line-height: 1.2;
+}
+
+.vr-slideshow.vr-overlay {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: 0;
+  background: #000;
+}
+
+.vr-slideshow.vr-overlay .vr-slide {
+  padding: 0;
+  gap: 0;
+}
+
+.vr-slideshow.vr-overlay .vr-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 0;
+  background: #000;
+}
+
+.vr-slideshow.vr-overlay .vr-caption {
+  position: absolute;
+  left: 50%;
+  bottom: 2rem;
+  transform: translateX(-50%);
+  padding: 0.6rem 1.25rem;
+  font-size: 1.25rem;
+  line-height: 1.2;
+  z-index: 10;
 }

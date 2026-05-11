@@ -5,11 +5,11 @@
     <div class="left-panel">
       <img src="/conference-banner.png" class="city-banner" style="view-transition-name: city" alt="" />
       <div class="openedx-wrap">
-        <img src="/openedx-logo-2026.png" alt="OpenEdX 2026" />
+        <img src="/openedx-logo-2026.png" alt="Open edX® 2026" />
       </div>
       <div class="logos">
         <img src="/wgu-logo.png"      alt="WGU" />
-        <img src="/openedx-logo.svg"  alt="OpenEdX" />
+        <img src="/openedx-logo.svg"  alt="Open edX®" />
       </div>
     </div>
     <div class="right-panel" />
