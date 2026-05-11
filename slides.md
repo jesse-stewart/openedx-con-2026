@@ -9,12 +9,22 @@ duration: 35min
 layout: title-slide
 ---
 
+<!--
+I'm very happy to be here :)
+Presenting something I am very passionate about.
+-->
+
 ---
 layout: about-slide
 transition: view-transition
 ---
 
 I'm a **Staff Software Engineer** at **Western Governors University** working on the **Open edX platform**. With a background in both software engineering and design, I focus on building scalable systems and improving the tools and experiences used by educators, developers, and learners.
+
+<!--
+I'm very happy to be here :)
+Presenting something I am very passionate about.
+-->
 
 ---
 transition: slide-left
@@ -49,6 +59,15 @@ Given all that cost, most teams extract **one output**: a pass/fail signal. That
 
 </div>
 
+<!--
+Writing tests is something I am not excited about.
+- They are expensive to Create
+- They are expensive to Run
+- They are expensive to Maintain
+
+I'm not going to fix those things. But I can show you how to extract more value from your tests.
+-->
+
 ---
 transition: slide-left
 level: 2
@@ -81,6 +100,14 @@ But wait, there's more!
 **Visual Regression** — Subtle layout changes and UI drift are hard to detect between releases.
 
 </div>
+
+<!--
+What I can fix!
+- A11y audits baked right into your tests.
+- Documentation as an artifact of running tests.
+- Production ready screenshots
+- Visual regression tests that expose UI drift
+-->
 
 ---
 transition: slide-left
@@ -115,6 +142,11 @@ npm install openedx-e2e-tests
 </div>
 </div>
 
+<!--
+I developed a set of tools that work along side Playwright to more easily write tests that are more valuable than test/fail.
+
+Feel free to look at the code while I talk. This can be installed in any frontend code repo, or as a standalone test suite.
+-->
 
 ---
 
@@ -143,6 +175,13 @@ Write the test once. Get everything else for (almost) free.
 
 </div>
 
+<!--
+I will show you how a single test can be expanded to include:
+- A11y reports, with detailed screenshots of violations.
+- Documentation, with production ready screenshots.
+- Pixel level diff detection with highlighted changes
+-->
+
 ---
 
 ```ts
@@ -157,6 +196,13 @@ test('user can log in', async ({ page }) => {
 });
 ```
 
+<!--
+This is a vanilla Playwright test. Not a particularly complex example. It:
+- goes to the login page
+- fills in username and password
+- clicks the submit button
+-->
+
 ---
 layout: two-cols-aside
 ---
@@ -168,21 +214,28 @@ Run tests headlessly, with a visible browser, in an interactive UI, or with the 
 
 ```bash
 # Run all tests
-npm test
+playwright test
 
  # With visible browser
-npm run test:headed
+playwright test --headed
 
 # Interactive UI mode
-npm run test:ui
+playwright test --ui
 
 # With debugger
-npm run test:debug
+playwright test --debug
 
 ```
 
 ::default::
 <video src="/video/08-running-tests.mov" autoplay loop muted class="aspect-square"></video>
+
+<!--
+Playwright provides a set of tools that make writing and running tests easier.
+ - headed mode allows you to watch the tests run in the browser.
+- UI mode is helpful because it allows you to debug failing tests with a timeline view.
+- Debug mode opens Playwright Inspector, which provides a visual interface to inspect elements, edit locators, and view logs.
+-->
 
 ---
 layout: two-cols-aside
@@ -201,6 +254,20 @@ npm run report
 ::default::
 <video src="/video/09-test-results.mov" autoplay loop muted class="aspect-square"></video>
 
+<!--
+Playwright provides some test results, failed test have a screen recording to help you debug the failing test. This is great.
+-->
+
+---
+layout: center
+---
+
+<img src="/video/09-ariel-moooore.gif" class="mx-auto" />
+
+<!--
+But I'm not satisifed and I want more from my Playwright tests
+-->
+
 ---
 
 ````md magic-move {lines: true}
@@ -216,14 +283,14 @@ test('user can log in', async ({ page }) => {
 });
 ```
 
-```ts
+```ts {3,8}
 // + assertA11y — now also runs an accessibility audit
 import { test } from '@playwright/test';
 import { assertA11y } from 'openedx-e2e-tests';
 
 test('user can log in', async ({ page }) => {
   await page.goto('/login');
-  
+
   await assertA11y(page, { report: true }, testInfo);
 
   await page.fill('#username', process.env.TEST_USERNAME!);
@@ -232,6 +299,10 @@ test('user can log in', async ({ page }) => {
 });
 ```
 ````
+
+<!--
+We lean on axe-core/playwright for most of the heavy lifting here, but we augment it a bit for our purpose.
+-->
 
 ---
 layout: two-cols-aside
@@ -249,6 +320,10 @@ npm run report:a11y
 
 ::default::
 <video src="/video/11-a11y-test-results.mov" autoplay loop muted class="aspect-square"></video>
+
+<!--
+Our a11y reports include high resolution screenshots that highlight each violation, which provides valuable feedback during remediation.
+-->
 
 ---
 
@@ -269,7 +344,7 @@ test('user can log in', async ({ page }) => {
 });
 ```
 
-```ts
+```ts {3,6-11,16-20}
 // + Testdoc — now generates annotated documentation too
 import { test } from '@playwright/test';
 import { assertA11y, TestdocTest } from 'openedx-e2e-tests';
@@ -289,10 +364,18 @@ test('user can log in', async ({ page }, testInfo) => {
   await testdoc.fill('#password', process.env.TEST_PASSWORD!, 'Enter Password');
   await testdoc.click('button[name="sign-in"]', 'Submit Login');
 
-  await testdoc.generateMarkdown();
+  await testdoc.generateRST();
 });
 ```
 ````
+
+<!--
+Generating documentation requires a bit of bootstrapping for the document header, then we can just write tests normally.
+
+Replacing our fill and click calls with testdoc will document those steps in our documentation files.
+
+Then we tell the test to generate RST or Markdown files.
+-->
 
 ---
 layout: two-cols-aside
@@ -301,10 +384,14 @@ layout: two-cols-aside
 ::aside::
 <h1 text-2xl!>Generated Documentation</h1>
 
-Pixel-by-pixel comparison against a stored baseline. Differences are flagged with red-highlighted diffs.
+Automatically generate RST or Markdown files from your E2E with production ready screenshots.
 
 ::default::
 <video src="/video/13-generated-documentation.mov" autoplay loop muted class="aspect-square"></video>
+
+<!--
+The results are production-quality screenshots and step-by-step instructions. You can confidently deploy your documentation knowing that it accurately reflects the code your just deployed.
+-->
 
 ---
 
@@ -333,7 +420,7 @@ test('user can log in', async ({ page }, testInfo) => {
 });
 ```
 
-```ts
+```ts {3,10,16}
 // + VisualRegression — pixel-level diff on every run
 import { test } from '@playwright/test';
 import { assertA11y, TestdocTest, VisualRegression } from 'openedx-e2e-tests';
@@ -359,6 +446,10 @@ test('user can log in', async ({ page }, testInfo) => {
 });
 ```
 ````
+
+<!--
+Take screenshots throughout your test to compare your changes to the baselines screenshots. Baselines screenshots can be regenerated in CI/CD process when new code is merged or part of the PR process.
+-->
 
 ---
 layout: two-cols-aside
@@ -790,4 +881,3 @@ layout: api-section
 Questions? Feedback? Find me after the talk.
 
 <img src="/beyond-test-coverage-e2e-a11y-documentation-an_stewart-balderrama_1177129_feedback-code.png" class="w-64 mt-4 -mb-10vh" />
-
