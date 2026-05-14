@@ -427,19 +427,19 @@ Pixel-by-pixel comparison against a stored baseline. Differences are flagged wit
 ::default::
 <div class="vr-slideshow aspect-[5/3.75]">
   <div class="vr-slide">
-    <img src="/screenshots/visual-regression-basline.png" alt="Visual regression baseline screenshot" />
+    <img src="/screenshots/visual-regression-login-basline.png" alt="Visual regression baseline screenshot" />
     <div class="vr-caption">1. Baseline screenshot used for comparison</div>
   </div>
   <div class="vr-slide" v-click="1">
-    <img src="/screenshots/visual-regression-changes.png" alt="Visual regression changed screenshot" />
+    <img src="/screenshots/visual-regression-login-changes.png" alt="Visual regression changed screenshot" />
     <div class="vr-caption">2. New screenshot after code changes</div>
   </div>
   <div class="vr-slide" v-click="2">
-    <img src="/screenshots/visual-regression-diff.png" alt="Visual regression diff screenshot" />
+    <img src="/screenshots/visual-regression-login-diff.png" alt="Visual regression diff screenshot" />
     <div class="vr-caption">3. Pixel diff highlighting visual changes</div>
   </div>
   <div class="vr-slide" v-click="3">
-    <img src="/screenshots/visual-regression-test-results.png" alt="Visual regression test results" />
+    <img src="/screenshots/visual-regression-login-test-results.png" alt="Visual regression test results" />
     <div class="vr-caption">4. Visual regression test summary report</div>
   </div>
 </div>
@@ -493,7 +493,7 @@ test('user can log in', async ({ page }, testInfo) => {
   await page.goto('/login');
 
   await assertA11y(page, { report: true }, testInfo);
-  await vr.captureAndCompare({ name: 'login-page' });
+  await vr.captureAndCompare({ name: 'login' });
 
   await testdoc.fill('#username', process.env.TEST_USERNAME!, 'Enter Username');
   await testdoc.fill('#password', process.env.TEST_PASSWORD!, 'Enter Password');
@@ -624,7 +624,7 @@ const testdoc = new TestdocTest(page, 'user-login');
 await testdoc.initialize();
 ```
 
-```ts {1, 5-13}
+```ts {1,5-13}
 // Full constructor options
 import { TestdocTest } from 'openedx-e2e-tests';
 ...
@@ -653,16 +653,18 @@ The constructor takes a page, a name for the output file, and a set of options t
 ---
 layout: full
 ---
-<pre class="aspect-video bg-gray">[SCREENSHOT]
-TestdocTest(
-  title
-  overview
-  prerequisites
-  notes
-  relatedTopics
-  showNumbers
-)
-</pre>
+
+<div class="slides-container">
+  <div class="vr-slide">
+    <img src="/screenshots/autodoc-init-rst.png" alt="TestdocTest RST output" class="max-h-100vh mx-auto" />
+  </div>
+  <div class="vr-slide" v-click="1">
+    <img src="/screenshots/autodoc-init-md.png" alt="TestdocTest Markdown output" class="max-h-100vh mx-auto" />
+  </div>
+  <div class="vr-slide" v-click="2">
+    <img src="/screenshots/autodoc-init-preview.png" alt="TestdocTest preview" class="max-h-100vh mx-auto" />
+  </div>
+</div>
 
 <!--
 And here's what that header looks like in the generated documentation — title, overview, and the supporting metadata laid out for the reader.
@@ -738,15 +740,17 @@ Three workhorse methods.
 layout: full
 ---
 
-<pre class="aspect-video bg-gray">[SCREENSHOT] 
-testdoc.step
-testdoc.fill
-testdoc.click
-</pre>
-
-<!--
-And here's what those three methods produce in the generated guide — a numbered set of steps with cropped, annotated screenshots.
--->
+<div class="slides-container">
+  <div class="vr-slide">
+    <img src="/screenshots/autodoc-steps-rst.png" alt="testdoc steps RST output" class="max-h-100 mx-auto" />
+  </div>
+  <div class="vr-slide" v-click="1">
+    <img src="/screenshots/autodoc-steps-md.png" alt="testdoc steps Markdown output" class="max-h-100 mx-auto" />
+  </div>
+  <div class="vr-slide" v-click="2">
+    <img src="/screenshots/autodoc-steps-preview.png" alt="testdoc steps preview" class="max-h-100 mx-auto" />
+  </div>
+</div>
 
 ---
 
@@ -801,23 +805,155 @@ A few more helpers: screenshot() for arbitrary captures that aren't tied to an i
 layout: full
 ---
 
+<div class="slides-container">
+  <div class="vr-slide">
+    <img src="/screenshots/autodoc-screenshots-rst.png" alt="testdoc screenshots RST output" class="max-h-100 mx-auto" />
+  </div>
+  <div class="vr-slide" v-click="1">
+    <img src="/screenshots/autodoc-screenshots-md.png" alt="testdoc screenshots Markdown output" class="max-h-100 mx-auto" />
+  </div>
+  <div class="vr-slide" v-click="2">
+    <img src="/screenshots/autodoc-screenshots-preview.png" alt="testdoc screenshots preview" class="max-h-100 mx-auto" />
+  </div>
+</div>
+
+<!--
+And here's what those three methods produce in the generated guide — a numbered set of steps with cropped, annotated screenshots.
+-->
+
+---
+layout: full
+---
+
 <div class="grid grid-cols-3" style="--slidev-code-font-size: 0.5rem; --slidev-code-line-height:0.625rem;">
 <div class="h-full">
 
 ```rst
-######################
-RST
-######################
+How to Log In
+=============
+
+Step-by-step guide to logging into the Open edX platform.
+
+Prerequisites
+=============
+
+Before you begin, ensure that:
+
+- Active account
+- Valid credentials
+
+.. note:: Use Forgot Password if needed
+
+Steps
+=====
+
+1. Navigate to the login page
+-----------------------------
+
+Open the sign-in form from the home page.
+
+.. image:: step-01-navigate-to-the-login-page.png
+   :alt: Step 1
+
+2. Enter your email address
+---------------------------
+
+.. image:: step-02-enter-your-email-address.png
+   :alt: Step 2
+
+3. Enter your password
+----------------------
+
+.. image:: step-03-enter-your-password.png
+   :alt: Step 3
+
+4. Click Sign In
+----------------
+
+Submit your credentials.
+
+.. image:: step-04-click-sign-in.png
+   :alt: Step 4
+
+5. Dashboard loaded
+-------------------
+
+You're now logged in.
+
+.. image:: step-05-dashboard-loaded.png
+   :alt: Step 5
+
+.. note:: Bookmark this page for quick access.
+
+Related Topics
+==============
+
+- `Create Account </signup>`_
+- Password requirements
+
+----
+
+*This documentation was automatically generated during testing.*
+
 ```
 
 </div>
-<pre class="h-full bg-gray">[SCREENSHOT] 
-[Preview]
-</pre>
+<img src="/screenshots/autodoc-full-preview.png" alt="Full documentation preview" class="h-full object-contain" />
 <div class="h-full">
 
 ```md
-# markdown
+# How to Log In
+
+Step-by-step guide to logging into the Open edX platform.
+
+## Prerequisites
+
+Before you begin, ensure that:
+
+- Active account
+- Valid credentials
+
+> **Note:** Use Forgot Password if needed
+
+## Steps
+
+### 1. Navigate to the login page
+
+Open the sign-in form from the home page.
+
+![Step 1](step-01-navigate-to-the-login-page.png)
+
+### 2. Enter your email address
+
+![Step 2](step-02-enter-your-email-address.png)
+
+### 3. Enter your password
+
+![Step 3](step-03-enter-your-password.png)
+
+### 4. Click Sign In
+
+Submit your credentials.
+
+![Step 4](step-04-click-sign-in.png)
+
+### 5. Dashboard loaded
+
+You're now logged in.
+
+![Step 5](step-05-dashboard-loaded.png)
+
+> **Note:** Bookmark this page for quick access.
+
+## Related Topics
+
+- [Create Account](/signup)
+- Password requirements
+
+---
+
+*This documentation was automatically generated during testing.*
+
 ```
 
 </div>
@@ -885,7 +1021,7 @@ And here's what the results look like at the console — a violations array and 
 import { assertA11y } from 'openedx-e2e-tests';
 
 test('login page is accessible', async ({ page }, testInfo) => {
-  await page.goto('/login');
+  await page.goto('/instructor-dashboard');
 
   // assertA11y — throws error on violations
   await assertA11y(page, {}, testInfo);
@@ -921,7 +1057,7 @@ Side by side: checkA11y returns, assertA11y throws. Same scan underneath — pic
 import { assertA11y } from 'openedx-e2e-tests';
 
 test('login page is accessible', async ({ page }, testInfo) => {
-  await page.goto('/login');
+  await page.goto('/instructor-dashboard');
   
   await assertA11y(page, {}, testInfo);
 });
@@ -931,7 +1067,7 @@ test('login page is accessible', async ({ page }, testInfo) => {
 import { assertA11y } from 'openedx-e2e-tests';
 
 test('login page is accessible', async ({ page }, testInfo) => {
-  await page.goto('/login');
+  await page.goto('/instructor-dashboard');
 
   // warnOnly — log instead of throw (good for onboarding)
   await assertA11y(page, {
@@ -971,7 +1107,7 @@ With warnOnly, violations show up in the test output but the test still passes. 
 import { assertA11y } from 'openedx-e2e-tests';
 
 test('login page is accessible', async ({ page }, testInfo) => {
-  await page.goto('/login');
+  await page.goto('/instructor-dashboard');
 
   await assertA11y(page, {
     warnOnly: true,
@@ -983,7 +1119,7 @@ test('login page is accessible', async ({ page }, testInfo) => {
 import { assertA11y } from 'openedx-e2e-tests';
 
 test('login page is accessible', async ({ page }, testInfo) => {
-  await page.goto('/login');
+  await page.goto('/instructor-dashboard');
 
   // + report — auto-generate HTML report after each run
   await assertA11y(page, {
@@ -1023,7 +1159,7 @@ This is the report — violations grouped by rule, with screenshots and links to
 import { assertA11y } from 'openedx-e2e-tests';
 
 test('login page is accessible', async ({ page }, testInfo) => {
-  await page.goto('/login');
+  await page.goto('/instructor-dashboard');
 
   await assertA11y(page, {
     warnOnly: true,
@@ -1037,7 +1173,7 @@ test('login page is accessible', async ({ page }, testInfo) => {
 import { assertA11y } from 'openedx-e2e-tests';
 
 test('login page is accessible', async ({ page }, testInfo) => {
-  await page.goto('/login');
+  await page.goto('/instructor-dashboard');
 
   // + disabledRules + exclude — fine-tune what gets scanned
   await assertA11y(page, {
@@ -1080,13 +1216,13 @@ Last API: visual regression. Pixelmatch under the hood does the diffing — we w
 ```ts
 import { VisualRegression } from 'openedx-e2e-tests';
 
-test('login page looks right', async ({ page }, testInfo) => {
+test('instructor dashboard looks right', async ({ page }, testInfo) => {
   const vr = new VisualRegression(page, testInfo);
-  await page.goto('/login');
+  await page.goto('/instructor-dashboard');
 
   // Basic setup — first run creates the baseline
   await vr.captureAndCompare({
-    name: 'login-page'
+    name: 'instructor-dashboard'
   });
 });
 ```
@@ -1135,12 +1271,12 @@ And here's what a basic comparison looks like — baseline, current, diff.
 ```ts
 import { VisualRegression } from 'openedx-e2e-tests';
 
-test('login page looks right', async ({ page }, testInfo) => {
+test('instructor dashboard looks right', async ({ page }, testInfo) => {
   const vr = new VisualRegression(page, testInfo);
-  await page.goto('/login');
+  await page.goto('/instructor-dashboard');
 
   await vr.captureAndCompare({
-    name: 'login-page'
+    name: 'instructor-dashboard'
   });
 });
 ```
@@ -1148,13 +1284,13 @@ test('login page looks right', async ({ page }, testInfo) => {
 ```ts {7,10}
 import { VisualRegression } from 'openedx-e2e-tests';
 
-test('login page looks right', async ({ page }, testInfo) => {
+test('instructor dashboard looks right', async ({ page }, testInfo) => {
   const vr = new VisualRegression(page, testInfo);
-  await page.goto('/login');
+  await page.goto('/instructor-dashboard');
 
   // + fullPage — capture the entire scrollable page
   await vr.captureAndCompare({
-    name: 'login-page',
+    name: 'instructor-dashboard',
     fullPage: true,
   });
 });
@@ -1205,13 +1341,13 @@ And here's what a basic comparison looks like — baseline, current, diff.
 ```ts {7,10}
 import { VisualRegression } from 'openedx-e2e-tests';
 
-test('login page looks right', async ({ page }, testInfo) => {
+test('instructor dashboard looks right', async ({ page }, testInfo) => {
   const vr = new VisualRegression(page, testInfo);
-  await page.goto('/login');
+  await page.goto('/instructor-dashboard');
 
   // + fullPage — capture the entire scrollable page
   await vr.captureAndCompare({
-    name: 'login-page',
+    name: 'instructor-dashboard',
     fullPage: true,
   });
 });
@@ -1220,13 +1356,13 @@ test('login page looks right', async ({ page }, testInfo) => {
 ```ts {7,11}
 import { VisualRegression } from 'openedx-e2e-tests';
 
-test('login page looks right', async ({ page }, testInfo) => {
+test('instructor dashboard looks right', async ({ page }, testInfo) => {
   const vr = new VisualRegression(page, testInfo);
-  await page.goto('/login');
+  await page.goto('/instructor-dashboard');
 
   // + mask — exclude dynamic content from comparison
   await vr.captureAndCompare({
-    name: 'login-page',
+    name: 'instructor-dashboard',
     fullPage: true,
     mask: ['.timestamp', '[data-testid="user-greeting"]'],
   });
@@ -1277,13 +1413,13 @@ And here's what a basic comparison looks like — baseline, current, diff.
 ```ts {7,11}
 import { VisualRegression } from 'openedx-e2e-tests';
 
-test('login page looks right', async ({ page }, testInfo) => {
+test('instructor dashboard looks right', async ({ page }, testInfo) => {
   const vr = new VisualRegression(page, testInfo);
-  await page.goto('/login');
+  await page.goto('/instructor-dashboard');
 
   // + mask — exclude dynamic content from comparison
   await vr.captureAndCompare({
-    name: 'login-page',
+    name: 'instructor-dashboard',
     fullPage: true,
     mask: ['.timestamp', '[data-testid="user-greeting"]'],
   });
@@ -1293,13 +1429,13 @@ test('login page looks right', async ({ page }, testInfo) => {
 ```ts {7,12}
 import { VisualRegression } from 'openedx-e2e-tests';
 
-test('login page looks right', async ({ page }, testInfo) => {
+test('instructor dashboard looks right', async ({ page }, testInfo) => {
   const vr = new VisualRegression(page, testInfo);
-  await page.goto('/login');
+  await page.goto('/instructor-dashboard');
 
   // + threshold — tune sensitivity for font rendering 
   await vr.captureAndCompare({
-    name: 'login-page',
+    name: 'instructor-dashboard',
     fullPage: true,
     mask: ['.timestamp', '[data-testid="user-greeting"]'],
     threshold: 0.03,  // 0.1 default · 0.05 strict · 0.15 lenient

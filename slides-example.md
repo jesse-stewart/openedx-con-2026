@@ -151,7 +151,7 @@ Write the test once. Get everything else for (almost) free.
 import { test } from '@playwright/test';
 
 test('user can log in', async ({ page }) => {
-  await page.goto('/login');
+  await page.goto('/instructor-dashboard');
   await page.fill('#username', process.env.TEST_USERNAME!);
   await page.fill('#password', process.env.TEST_PASSWORD!);
   await page.click('button[name="sign-in"]');
@@ -164,7 +164,7 @@ import { test } from '@playwright/test';
 import { assertA11y } from 'openedx-e2e-tests';
 
 test('user can log in', async ({ page }) => {
-  await page.goto('/login');
+  await page.goto('/instructor-dashboard');
   
   await assertA11y(page, { report: true }, testInfo);
 
@@ -186,7 +186,7 @@ test('user can log in', async ({ page }, testInfo) => {
   });
 
   await testdoc.initialize();
-  await page.goto('/login');
+  await page.goto('/instructor-dashboard');
 
   await assertA11y(page, { report: true }, testInfo);
 
@@ -211,10 +211,10 @@ test('user can log in', async ({ page }, testInfo) => {
   const vr = new VisualRegression(page, testInfo);
 
   await testdoc.initialize();
-  await page.goto('/login');
+  await page.goto('/instructor-dashboard');
 
   await assertA11y(page, { report: true }, testInfo);
-  await vr.captureAndCompare({ name: 'login-page' });
+  await vr.captureAndCompare({ name: 'instructor-dashboard' });
 
   await testdoc.fill('#username', process.env.TEST_USERNAME!, 'Enter Username');
   await testdoc.fill('#password', process.env.TEST_PASSWORD!, 'Enter Password');
