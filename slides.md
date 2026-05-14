@@ -1121,7 +1121,7 @@ import { assertA11y } from 'openedx-e2e-tests';
 test('login page is accessible', async ({ page }, testInfo) => {
   await page.goto('/instructor-dashboard');
 
-  // + report — auto-generate HTML report after each run
+  // report — auto-generate HTML report after each run
   await assertA11y(page, {
     warnOnly: true,
     report: true,
@@ -1175,7 +1175,7 @@ import { assertA11y } from 'openedx-e2e-tests';
 test('login page is accessible', async ({ page }, testInfo) => {
   await page.goto('/instructor-dashboard');
 
-  // + disabledRules + exclude — fine-tune what gets scanned
+  // disabledRules + exclude — fine-tune what gets scanned
   await assertA11y(page, {
     warnOnly: true,
     report: true,
@@ -1240,7 +1240,7 @@ layout: full
 <div class="vr-slideshow vr-overlay">
   <div class="vr-slide">
     <img src="/screenshots/visual-regression-basline.png" alt="Visual regression baseline screenshot" />
-    <div class="vr-caption">Before</div>
+    <div class="vr-caption">Baseline</div>
   </div>
   <div class="vr-slide" v-click="1">
     <img src="/screenshots/visual-regression-changes.png" alt="Visual regression changed screenshot" />
@@ -1288,10 +1288,10 @@ test('instructor dashboard looks right', async ({ page }, testInfo) => {
   const vr = new VisualRegression(page, testInfo);
   await page.goto('/instructor-dashboard');
 
-  // + fullPage — capture the entire scrollable page
+  // capture just the viewport
   await vr.captureAndCompare({
     name: 'instructor-dashboard',
-    fullPage: true,
+    fullPage: false,
   });
 });
 ```
@@ -1301,7 +1301,7 @@ test('instructor dashboard looks right', async ({ page }, testInfo) => {
 
 <!--
 A few options to tune the comparison.
-- fullPage captures the entire scrollable page, not just the viewport. 
+- by default VisualRegression captures the entire scrollable page, while fullPage: false captures just the viewport. 
 -->
 
 ---
@@ -1310,20 +1310,73 @@ layout: full
 
 <div class="vr-slideshow vr-overlay">
   <div class="vr-slide">
-    <img src="/screenshots/visual-regression-basline.png" alt="Visual regression baseline screenshot" />
-    <div class="vr-caption">Before</div>
+    <img src="/screenshots/visual-regression2-basline.png" alt="Visual regression baseline screenshot" />
+    <div class="vr-caption">Baseline</div>
   </div>
   <div class="vr-slide" v-click="1">
-    <img src="/screenshots/visual-regression-changes.png" alt="Visual regression changed screenshot" />
+    <img src="/screenshots/visual-regression2-changes.png" alt="Visual regression changed screenshot" />
     <div class="vr-caption">After</div>
   </div>
   <div class="vr-slide" v-click="2">
-    <img src="/screenshots/visual-regression-diff.png" alt="Visual regression diff screenshot" />
+    <img src="/screenshots/visual-regression2-diff.png" alt="Visual regression diff screenshot" />
     <div class="vr-caption">Diff</div>
   </div>
   <div class="vr-slide" v-click="3">
-    <img src="/screenshots/visual-regression-test-results.png" alt="Visual regression test results" />
+    <img src="/screenshots/visual-regression2-test-results.png" alt="Visual regression test results" />
     <div class="vr-caption">Report</div>
+  </div>
+</div>
+
+<!--
+And here's what a basic comparison looks like — baseline, current, diff.
+-->
+
+---
+layout: two-cols-aside
+---
+
+::aside::
+<h1 text-2xl!>Accepting New Changes</h1>
+
+When visual changes are intentional, clear existing baselines and regenerate them from the new screenshots.
+
+```bash
+npx reset-baselines tests/instructor-dashboard.spec.ts
+```
+
+::default::
+
+<div class="vr-slideshow aspect-[5/3.75]">
+  <div class="vr-slide">
+    <img src="/screenshots/visual-baselines-dir.png" alt="Visual baselines directory before" />
+    <div class="vr-caption">1. Clear existing __visual-baselines__</div>
+  </div>
+  <div class="vr-slide" v-click="1">
+    <img src="/screenshots/visual-baselines-dir2.png" alt="Visual baselines directory after" />
+    <div class="vr-caption">2. New baselines generated on next test run</div>
+  </div>
+</div>
+
+<!--
+Accepting new changes is straightforward: use the reset-baselines command to delete baselines for specific tests, then run your tests again. The first run after deletion creates fresh baselines from your current code. This can be done on a developer machine during active development or automated in your CI/CD pipeline on merge to main, ensuring baselines stay in sync with production.
+-->
+
+---
+layout: full
+---
+
+<div class="vr-slideshow vr-overlay">
+  <div class="vr-slide">
+    <img src="/screenshots/visual-regression3-basline.png" alt="Visual regression baseline screenshot" />
+    <div class="vr-caption">Baseline</div>
+  </div>
+  <div class="vr-slide" v-click="1">
+    <img src="/screenshots/visual-regression3-changes.png" alt="Visual regression changed screenshot" />
+    <div class="vr-caption">2nd Run</div>
+  </div>
+  <div class="vr-slide" v-click="2">
+    <img src="/screenshots/visual-regression3-diff.png" alt="Visual regression diff screenshot" />
+    <div class="vr-caption">Diff</div>
   </div>
 </div>
 
@@ -1345,26 +1398,30 @@ test('instructor dashboard looks right', async ({ page }, testInfo) => {
   const vr = new VisualRegression(page, testInfo);
   await page.goto('/instructor-dashboard');
 
-  // + fullPage — capture the entire scrollable page
+  // capture just the viewport
   await vr.captureAndCompare({
     name: 'instructor-dashboard',
-    fullPage: true,
+    fullPage: false,
   });
 });
 ```
 
-```ts {7,11}
+```ts {7,11-20}
 import { VisualRegression } from 'openedx-e2e-tests';
 
 test('instructor dashboard looks right', async ({ page }, testInfo) => {
   const vr = new VisualRegression(page, testInfo);
   await page.goto('/instructor-dashboard');
 
-  // + mask — exclude dynamic content from comparison
+  // hide + mask — handle dynamic content
   await vr.captureAndCompare({
     name: 'instructor-dashboard',
-    fullPage: true,
-    mask: ['.timestamp', '[data-testid="user-greeting"]'],
+    fullPage: false,
+    hide: ['.timestamp'],
+    mask: [
+      '[aria-label="Masquerade bar"]',
+      { x: 25, y: 360, width: 500, height: 60 },
+    ],
   });
 });
 ```
@@ -1373,7 +1430,7 @@ test('instructor dashboard looks right', async ({ page }, testInfo) => {
 </div>
 
 <!--
-- mask hides dynamic content like timestamps or personalized greetings that would otherwise create false positives.
+- hide dynamic content like timestamps or personalized greetings that would otherwise create false positives.
 -->
 
 ---
@@ -1382,20 +1439,12 @@ layout: full
 
 <div class="vr-slideshow vr-overlay">
   <div class="vr-slide">
-    <img src="/screenshots/visual-regression-basline.png" alt="Visual regression baseline screenshot" />
+    <img src="/screenshots/visual-regression3-diff.png" alt="Visual regression baseline screenshot" />
     <div class="vr-caption">Before</div>
   </div>
   <div class="vr-slide" v-click="1">
-    <img src="/screenshots/visual-regression-changes.png" alt="Visual regression changed screenshot" />
+    <img src="/screenshots/visual-regression4.png" alt="Visual regression changed screenshot" />
     <div class="vr-caption">After</div>
-  </div>
-  <div class="vr-slide" v-click="2">
-    <img src="/screenshots/visual-regression-diff.png" alt="Visual regression diff screenshot" />
-    <div class="vr-caption">Diff</div>
-  </div>
-  <div class="vr-slide" v-click="3">
-    <img src="/screenshots/visual-regression-changes.png" alt="Visual regression changed screenshot" />
-    <div class="vr-caption">Fixed</div>
   </div>
 </div>
 
@@ -1405,40 +1454,86 @@ And here's what a basic comparison looks like — baseline, current, diff.
 
 ---
 
+<h1 text-2xl!><code>hide</code> vs <code>mask</code></h1>
+
+<div class="grid grid-cols-2 gap-12 mt-12">
+
+<div>
+
+## `hide`
+
+- Sets `opacity: 0` via CSS
+- CSS selectors only
+- Timestamps, user names
+- Element not visible in screenshots
+
+</div>
+
+<div>
+
+## `mask`
+
+- Fills region with gray before comparison
+- CSS selectors or `x,y,w,h` coordinates
+- Ads, avatars, widgets
+- Element visible in screenshots
+
+</div>
+
+</div>
+
+<div class="mt-8 text-sm opacity-80">
+
+Need variable-width element in your screenshots? Use `mask` with coordinates instead of `hide`.
+
+</div>
+
+<!--
+The key distinction: hide sets opacity zero via CSS, so those elements are invisible in your screenshots—use it for variable-width content like timestamps or user names. Mask fills a region with gray before comparison but doesn't change the screenshot itself—use it for fixed regions you want to completely ignore, like ads or avatars. hide changes what you see, mask changes what you compare.
+-->
+
+---
+
 <h1 text-2xl!>Visual Regression</h1>
 
 <div class="code-lg">
 
 ````md magic-move
-```ts {7,11}
+```ts
 import { VisualRegression } from 'openedx-e2e-tests';
 
 test('instructor dashboard looks right', async ({ page }, testInfo) => {
   const vr = new VisualRegression(page, testInfo);
   await page.goto('/instructor-dashboard');
 
-  // + mask — exclude dynamic content from comparison
   await vr.captureAndCompare({
     name: 'instructor-dashboard',
-    fullPage: true,
-    mask: ['.timestamp', '[data-testid="user-greeting"]'],
+    fullPage: false,
+    hide: ['.timestamp'],
+    mask: [
+      '[aria-label="Masquerade bar"]',
+      { x: 25, y: 360, width: 500, height: 60 },
+    ],
   });
 });
 ```
 
-```ts {7,12}
+```ts {15}
 import { VisualRegression } from 'openedx-e2e-tests';
 
 test('instructor dashboard looks right', async ({ page }, testInfo) => {
   const vr = new VisualRegression(page, testInfo);
   await page.goto('/instructor-dashboard');
 
-  // + threshold — tune sensitivity for font rendering 
   await vr.captureAndCompare({
     name: 'instructor-dashboard',
-    fullPage: true,
-    mask: ['.timestamp', '[data-testid="user-greeting"]'],
-    threshold: 0.03,  // 0.1 default · 0.05 strict · 0.15 lenient
+    fullPage: false,
+    hide: ['.timestamp'],
+    mask: [
+      '[aria-label="Masquerade bar"]',
+      { x: 25, y: 360, width: 500, height: 60 },
+    ],
+    threshold: 0.01,  // 0.1 default · 0.05 strict · 0.15 lenient
   });
 });
 ```
@@ -1517,16 +1612,20 @@ layout: full
 
 <div class="vr-slideshow vr-overlay">
   <div class="vr-slide">
-    <img src="/screenshots/visual-regression-basline.png" alt="Visual regression baseline screenshot" />
+    <img src="/screenshots/visual-regression-login-basline.png" alt="Visual regression baseline screenshot" />
     <div class="vr-caption">Before</div>
   </div>
   <div class="vr-slide" v-click="1">
-    <img src="/screenshots/visual-regression-changes.png" alt="Visual regression changed screenshot" />
+    <img src="/screenshots/visual-regression-login-changes.png" alt="Visual regression changed screenshot" />
     <div class="vr-caption">After</div>
   </div>
   <div class="vr-slide" v-click="2">
-    <img src="/screenshots/visual-regression-diff.png" alt="Visual regression diff screenshot" />
-    <div class="vr-caption">Diff</div>
+    <img src="/screenshots/visual-regression-login-threshold-diff.png" alt="Visual regression diff screenshot" />
+    <div class="vr-caption">threshold: 0.10</div>
+  </div>
+  <div class="vr-slide" v-click="3">
+    <img src="/screenshots/visual-regression-login-threshold-diff2.png" alt="Visual regression diff screenshot" />
+    <div class="vr-caption">threshold: 0.01</div>
   </div>
 </div>
 
