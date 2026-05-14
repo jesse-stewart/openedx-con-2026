@@ -989,8 +989,11 @@ import { checkA11y } from 'openedx-e2e-tests';
 // checkA11y — returns results, never throws error
 const results = await checkA11y(page);
 
-console.log(`Violations: ${results.violations.length}`);
-console.log(`Passes: ${results.passes.length}`);
+console.table({
+  '✓ Passes': results.passes.length,
+  '✗ Violations': results.violations.length,
+  '⚠ Incomplete': results.incomplete.length,
+});
 ```
 
 </div>
@@ -1002,13 +1005,24 @@ The lowest-level primitive: checkA11y runs the scan and returns a results object
 ---
 layout: full
 ---
-<pre class="aspect-video bg-gray">[SCREENSHOT]
-checkA11y
-console.log
-</pre>
+<div class="vr-slideshow vr-overlay">
+  <div class="vr-slide">
+    <img src="/screenshots/a11y-console.png" alt="Visual regression baseline screenshot" />
+    <div class="vr-caption">Console</div>
+  </div>
+  <div class="vr-slide" v-click="1">
+    <img src="/screenshots/a11y-report-1.png" alt="Visual regression changed screenshot" />
+    <div class="vr-caption">Report</div>
+  </div>
+  <div class="vr-slide" v-click="2">
+    <img src="/screenshots/a11y-report-2.png" alt="Visual regression diff screenshot" />
+    <div class="vr-caption">Report</div>
+  </div>
+</div>
+
 
 <!--
-And here's what the results look like at the console — a violations array and a passes array you can introspect.
+And here's what the results look like in the console — a violations array and a passes array you can introspect.
 -->
 
 ---
@@ -1037,14 +1051,12 @@ For most use cases you want assertA11y. Same axe scan, but it throws if there ar
 ---
 layout: full
 ---
-<pre class="aspect-video bg-gray">[SCREENSHOT]
-checkA11y
-assertA11y
-</pre>
+<img src="/public/screenshots/a11y-failed-test.png" alt="checkA11y vs assertA11y" class="aspect-video" />
 
 <!--
 Side by side: checkA11y returns, assertA11y throws. Same scan underneath — pick the one that fits how you want failures to surface.
 -->
+-->
 
 ---
 
@@ -1058,134 +1070,30 @@ import { assertA11y } from 'openedx-e2e-tests';
 
 test('login page is accessible', async ({ page }, testInfo) => {
   await page.goto('/instructor-dashboard');
-  
+
   await assertA11y(page, {}, testInfo);
 });
 ```
 
-```ts {1,6-9}
-import { assertA11y } from 'openedx-e2e-tests';
-
-test('login page is accessible', async ({ page }, testInfo) => {
-  await page.goto('/instructor-dashboard');
-
-  // warnOnly — log instead of throw (good for onboarding)
-  await assertA11y(page, {
-    warnOnly: true,
-  }, testInfo);
-});
-```
-````
-
-</div>
-
-<!--
-When you bolt accessibility onto an existing codebase, failing every test on day one isn't realistic. warnOnly logs violations instead of throwing — so you can adopt this gradually, fix violations over time, and flip the flag off when you're ready.
--->
-
----
-layout: full
----
-<pre class="aspect-video bg-gray">[SCREENSHOT]
-checkA11y
-assertA11y
-warnOnly
-</pre>
-
-<!--
-With warnOnly, violations show up in the test output but the test still passes. Same data, softer enforcement.
--->
-
----
-
-<h1 text-2xl!>A11y Tests</h1>
-
-<div class="code-lg">
-
-````md magic-move
-```ts
+```ts {1,7-11}
 import { assertA11y } from 'openedx-e2e-tests';
 
 test('login page is accessible', async ({ page }, testInfo) => {
   await page.goto('/instructor-dashboard');
 
   await assertA11y(page, {
-    warnOnly: true,
-  }, testInfo);
-});
-```
-
-```ts {1,6,9-10}
-import { assertA11y } from 'openedx-e2e-tests';
-
-test('login page is accessible', async ({ page }, testInfo) => {
-  await page.goto('/instructor-dashboard');
-
-  // report — auto-generate HTML report after each run
-  await assertA11y(page, {
-    warnOnly: true,
-    report: true,
-    reportName: 'login-page',  // distinguish multiple checks in one test
-  }, testInfo);
-});
-```
-````
-
-</div>
-
-<!--
-Pass report: true and you get a per-test HTML report with screenshots and remediation guidance. reportName lets you distinguish multiple A11y checks within a single test — for example, before and after a state change.
--->
-
----
-layout: full
----
-<pre class="aspect-video bg-gray">[SCREENSHOT]
-report
-</pre>
-
-<!--
-This is the report — violations grouped by rule, with screenshots and links to the axe documentation for each one. This is what you hand to a developer when you want them to fix something.
--->
-
----
-
-<h1 text-2xl!>A11y Tests</h1>
-
-<div class="code-lg">
-
-````md magic-move
-```ts
-import { assertA11y } from 'openedx-e2e-tests';
-
-test('login page is accessible', async ({ page }, testInfo) => {
-  await page.goto('/instructor-dashboard');
-
-  await assertA11y(page, {
-    warnOnly: true,
-    report: true,
-    reportName: 'login-page',
-  }, testInfo);
-});
-```
-
-```ts {1,6,11-12}
-import { assertA11y } from 'openedx-e2e-tests';
-
-test('login page is accessible', async ({ page }, testInfo) => {
-  await page.goto('/instructor-dashboard');
-
-  // disabledRules + exclude — fine-tune what gets scanned
-  await assertA11y(page, {
-    warnOnly: true,
-    report: true,
-    reportName: 'login-page',
+    warnOnly: true,                      // Don't fail test on violations
+    report: true,                        // Generate HTML report
+    reportName: 'login-page',            // Report file name
     disabledRules: ['color-contrast'],   // known false positive
-    exclude: ['.third-party-widget'],    // out of our control
+    exclude: ['.third-party-widget'],    // Exclude using selectors
   }, testInfo);
 });
 ```
 ````
+
+[axe-core Rule Descriptions](https://github.com/dequelabs/axe-core/blob/develop/doc/rule-descriptions.md): 
+`https://github.com/dequelabs/axe-core/blob/develop/doc/rule-descriptions.md`
 
 </div>
 
@@ -1391,7 +1299,7 @@ And here's what a basic comparison looks like — baseline, current, diff.
 <div class="code-lg">
 
 ````md magic-move
-```ts {7,10}
+```ts
 import { VisualRegression } from 'openedx-e2e-tests';
 
 test('instructor dashboard looks right', async ({ page }, testInfo) => {
@@ -1632,6 +1540,87 @@ layout: full
 <!--
 And here's what a basic comparison looks like — baseline, current, diff.
 -->
+
+---
+layout: two-cols
+class: gap-8
+---
+
+# Playwright Helpers
+
+Common functions you'll use frequently
+
+<div class="text-xs pr-8">
+
+<div v-click>
+
+**Wait Functions**
+```ts
+await page.waitForLoadState('networkidle')
+await page.waitForSelector('#element')
+await expect(locator).toBeVisible()
+await page.waitForURL(/dashboard/)
+await page.waitForTimeout(5000)
+```
+
+</div>
+
+<div v-click>
+
+**Navigation**
+```ts
+await page.goto(url)
+await page.goBack() / await page.goForward()
+await page.reload()
+```
+
+</div>
+
+</div>
+
+::right::
+
+<div class="text-xs">
+
+<div v-click>
+
+**Interactions**
+```ts
+await page.click('#button')
+await page.fill('#input', 'text')
+await page.selectOption('#dropdown', 'value')
+await page.check('#checkbox')
+await page.hover('#element')
+await page.mouse.move(0, 0)
+```
+
+</div>
+
+<div v-click>
+
+**Element Queries**
+```ts
+await page.locator('#id')
+await page.getByRole('button', { name: 'Submit' })
+await page.textContent('#element')
+await page.isVisible('#element')
+```
+
+</div>
+
+<div v-click>
+
+**Assertions**
+```ts
+await expect(locator).toBeVisible()
+await expect(locator).toHaveText('text')
+await expect(locator).toBeEnabled()
+await expect(page).toHaveURL(/pattern/)
+```
+
+</div>
+
+</div>
 
 ---
 layout: api-section
