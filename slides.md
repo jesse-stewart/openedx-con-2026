@@ -158,6 +158,8 @@ Feel free to look at the code while I talk. This can be installed in any fronten
 -->
 
 ---
+transition: slide-left
+---
 
 # One Codebase. Four Outputs.
 
@@ -189,6 +191,7 @@ Four artifacts from one test: the pass/fail signal you already get from Playwrig
 -->
 
 ---
+transition: slide-left
 layout: api-section
 ---
 
@@ -200,6 +203,8 @@ layout: api-section
 I'll go through the basic usage of each feature before digging deeper into each method.
 -->
 
+---
+transition: slide-left
 ---
 
 <h1 text-2xl!>E2E Tests</h1>
@@ -228,6 +233,7 @@ This is a vanilla Playwright test. Not a particularly complex example. It:
 -->
 
 ---
+transition: slide-left
 layout: two-cols-aside
 ---
 
@@ -262,6 +268,7 @@ Playwright provides a set of tools that make writing and running tests easier.
 -->
 
 ---
+transition: slide-left
 layout: two-cols-aside
 ---
 
@@ -278,6 +285,7 @@ Playwright provides some test results, failed test have a screen recording to he
 -->
 
 ---
+transition: slide-left
 layout: center
 ---
 
@@ -288,6 +296,7 @@ I want more
 -->
 
 ---
+transition: slide-left
 layout: two-cols-aside
 ---
 
@@ -303,6 +312,8 @@ Generate A11y directly from your E2E tests. Violations are compiled into a dedic
 Our a11y reports include high resolution screenshots that highlight each violation, which provides valuable feedback during remediation.
 -->
 
+---
+transition: slide-left
 ---
 
 <h1 text-2xl!>A11y Tests</h1>
@@ -346,6 +357,7 @@ We lean on axe-core/playwright for most of the heavy lifting here, but we augmen
 -->
 
 ---
+transition: slide-left
 layout: two-cols-aside
 ---
 
@@ -361,6 +373,8 @@ Automatically generate RST or Markdown files from your E2E with production ready
 The results are production-quality screenshots and step-by-step instructions. You can confidently deploy your documentation knowing that it accurately reflects the code your just deployed.
 -->
 
+---
+transition: slide-left
 ---
 
 <h1 text-2xl!>Generated Documentation</h1>
@@ -416,6 +430,7 @@ Then we tell the test to generate RST or Markdown files.
 -->
 
 ---
+transition: slide-left
 layout: two-cols-aside
 ---
 
@@ -448,6 +463,8 @@ Pixel-by-pixel comparison against a stored baseline. Differences are flagged wit
 Visual regression in four steps: a baseline screenshot is captured on the first run, subsequent runs capture a new screenshot, pixelmatch generates a diff with the changes highlighted in red, and the results land in a summary report you can review.
 -->
 
+---
+transition: slide-left
 ---
 
 <h1 text-2xl!>Visual Regression Testing</h1>
@@ -508,6 +525,8 @@ test('user can log in', async ({ page }, testInfo) => {
 Take screenshots throughout your test to compare your changes to the baselines screenshots. Baselines screenshots can be regenerated in CI/CD process when new code is merged or part of the PR process.
 -->
 
+---
+transition: slide-left
 ---
 
 # Browser Support
@@ -595,6 +614,7 @@ Where you run these tests determines what they cost you and what they catch.
 -->
 
 ---
+transition: slide-left
 layout: api-section
 ---
 
@@ -608,6 +628,8 @@ Powered by `@playwright/test`
 Now we'll dig into TestdocTest — the documentation generator. This is what turns a Playwright test into a step-by-step user guide.
 -->
 
+---
+transition: slide-left
 ---
 
 <h1 text-2xl!>Generating Documentation</h1>
@@ -651,6 +673,7 @@ The constructor takes a page, a name for the output file, and a set of options t
 -->
 
 ---
+transition: slide-left
 layout: full
 ---
 
@@ -670,6 +693,8 @@ layout: full
 And here's what that header looks like in the generated documentation — title, overview, and the supporting metadata laid out for the reader.
 -->
 
+---
+transition: slide-left
 ---
 
 <h1 text-2xl!>Generating Documentation</h1>
@@ -737,6 +762,7 @@ Three workhorse methods.
 -->
 
 ---
+transition: slide-left
 layout: full
 ---
 
@@ -752,6 +778,8 @@ layout: full
   </div>
 </div>
 
+---
+transition: slide-left
 ---
 
 <h1 text-2xl!>Generating Documentation</h1>
@@ -802,6 +830,7 @@ A few more helpers: screenshot() for arbitrary captures that aren't tied to an i
 -->
 
 ---
+transition: slide-left
 layout: full
 ---
 
@@ -822,6 +851,7 @@ And here's what those three methods produce in the generated guide — a numbere
 -->
 
 ---
+transition: slide-left
 layout: full
 ---
 
@@ -964,6 +994,7 @@ Same source test, two output formats. RST on the left for projects that publish 
 -->
 
 ---
+transition: slide-left
 layout: api-section
 ---
 
@@ -977,6 +1008,8 @@ Powered by `@axe-core/playwright`
 Next: accessibility. axe-core does the heavy lifting under the hood — we've layered on screenshots, reports, and a few ergonomic options that make it easier to adopt incrementally.
 -->
 
+---
+transition: slide-left
 ---
 
 <h1 text-2xl!>A11y Tests</h1>
@@ -1003,6 +1036,7 @@ The lowest-level primitive: checkA11y runs the scan and returns a results object
 -->
 
 ---
+transition: slide-left
 layout: full
 ---
 <div class="vr-slideshow vr-overlay">
@@ -1025,6 +1059,8 @@ layout: full
 And here's what the results look like in the console — a violations array and a passes array you can introspect.
 -->
 
+---
+transition: slide-left
 ---
 
 <h1 text-2xl!>A11y Tests</h1>
@@ -1049,6 +1085,7 @@ For most use cases you want assertA11y. Same axe scan, but it throws if there ar
 -->
 
 ---
+transition: slide-left
 layout: full
 ---
 <img src="/public/screenshots/a11y-failed-test.png" alt="checkA11y vs assertA11y" class="aspect-video" />
@@ -1058,6 +1095,8 @@ Side by side: checkA11y returns, assertA11y throws. Same scan underneath — pic
 -->
 -->
 
+---
+transition: slide-left
 ---
 
 <h1 text-2xl!>A11y Tests</h1>
@@ -1102,6 +1141,7 @@ Two escape hatches you'll reach for eventually. disabledRules silences a specifi
 -->
 
 ---
+transition: slide-left
 layout: api-section
 ---
 
@@ -1115,6 +1155,8 @@ Powered by `pixelmatch`
 Last API: visual regression. Pixelmatch under the hood does the diffing — we wrap it with the Playwright integration, baseline management, and reporting.
 -->
 
+---
+transition: slide-left
 ---
 
 <h1 text-2xl!>Visual Regression</h1>
@@ -1142,6 +1184,7 @@ Create a VisualRegression instance, then captureAndCompare. The first run captur
 -->
 
 ---
+transition: slide-left
 layout: full
 ---
 
@@ -1169,6 +1212,8 @@ And here's what a basic comparison looks like — baseline, current, diff.
 -->
 
 
+---
+transition: slide-left
 ---
 
 <h1 text-2xl!>Visual Regression</h1>
@@ -1213,6 +1258,7 @@ A few options to tune the comparison.
 -->
 
 ---
+transition: slide-left
 layout: full
 ---
 
@@ -1240,6 +1286,7 @@ And here's what a basic comparison looks like — baseline, current, diff.
 -->
 
 ---
+transition: slide-left
 layout: two-cols-aside
 ---
 
@@ -1270,6 +1317,7 @@ Accepting new changes is straightforward: use the reset-baselines command to del
 -->
 
 ---
+transition: slide-left
 layout: full
 ---
 
@@ -1292,6 +1340,8 @@ layout: full
 And here's what a basic comparison looks like — baseline, current, diff.
 -->
 
+---
+transition: slide-left
 ---
 
 <h1 text-2xl!>Visual Regression</h1>
@@ -1342,6 +1392,7 @@ test('instructor dashboard looks right', async ({ page }, testInfo) => {
 -->
 
 ---
+transition: slide-left
 layout: full
 ---
 
@@ -1360,6 +1411,8 @@ layout: full
 And here's what a basic comparison looks like — baseline, current, diff.
 -->
 
+---
+transition: slide-left
 ---
 
 <h1 text-2xl!><code>hide</code> vs <code>mask</code></h1>
@@ -1400,6 +1453,8 @@ Need variable-width element in your screenshots? Use `mask` with coordinates ins
 The key distinction: hide sets opacity zero via CSS, so those elements are invisible in your screenshots—use it for variable-width content like timestamps or user names. Mask fills a region with gray before comparison but doesn't change the screenshot itself—use it for fixed regions you want to completely ignore, like ads or avatars. hide changes what you see, mask changes what you compare.
 -->
 
+---
+transition: slide-left
 ---
 
 <h1 text-2xl!>Visual Regression</h1>
@@ -1454,6 +1509,7 @@ test('instructor dashboard looks right', async ({ page }, testInfo) => {
 -->
 
 ---
+transition: slide-left
 layout: two-cols-aside
 ---
 
@@ -1515,6 +1571,7 @@ Threshold is the per-pixel color distance allowed before a pixel counts as diffe
 -->
 
 ---
+transition: slide-left
 layout: full
 ---
 
@@ -1542,6 +1599,7 @@ And here's what a basic comparison looks like — baseline, current, diff.
 -->
 
 ---
+transition: slide-left
 layout: two-cols
 class: gap-8
 ---
@@ -1623,6 +1681,7 @@ await expect(page).toHaveURL(/pattern/)
 </div>
 
 ---
+transition: slide-left
 layout: api-section
 ---
 
@@ -1632,6 +1691,8 @@ layout: api-section
 That's the whole API. Before I wrap up, a few honest gaps and a pitch to contribute.
 -->
 
+---
+transition: slide-left
 ---
 
 <h1>New Problems</h1>
@@ -1679,6 +1740,36 @@ A few things this doesn't solve yet. How do we seed the test environment with th
 -->
 
 ---
+transition: slide-left
+---
+
+# Contributors
+
+A huge thank you to the people who have helped shape this library.
+
+<div class="flex items-center gap-8 mt-12">
+
+<img src="/jesus-photo.png" class="w-32 h-32 rounded-full object-cover" />
+
+<div>
+
+## Jesus Balderrama
+
+Jesus is a **Senior Software Engineer** at **Western Governors University** with a frontend focus on building scalable, robust systems. He recently led the React Query migration in the `authn` repository and currently works on the frontend base team.
+
+[github.com/jesusbalderramawgu](https://github.com/jesusbalderramawgu)
+
+</div>
+
+</div>
+
+<!--
+Before I wrap up — a quick thank you to Jesus Balderrama for his contributions to the library. This is a community effort and it's better because of people willing to dig in and contribute.
+-->
+
+---
+transition: slide-left
+---
 
 # How to contribute
 
@@ -1722,6 +1813,7 @@ The library is on npm — install it in any frontend repo or stand it up as its 
 -->
 
 ---
+transition: slide-left
 layout: api-section
 ---
 
