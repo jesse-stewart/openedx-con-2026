@@ -1088,7 +1088,7 @@ For most use cases you want assertA11y. Same axe scan, but it throws if there ar
 transition: slide-left
 layout: full
 ---
-<img src="/public/screenshots/a11y-failed-test.png" alt="checkA11y vs assertA11y" class="aspect-video" />
+<img src="/screenshots/a11y-failed-test.png" alt="checkA11y vs assertA11y" class="aspect-video" />
 
 <!--
 Side by side: checkA11y returns, assertA11y throws. Same scan underneath — pick the one that fits how you want failures to surface.
