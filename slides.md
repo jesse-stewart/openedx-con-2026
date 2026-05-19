@@ -26,6 +26,20 @@ A bit about me — I bridge engineering and design, which is part of why I built
 -->
 
 ---
+layout: center
+---
+
+# Follow Along
+
+[https://openedx-con-2026.vercel.app/](https://openedx-con-2026.vercel.app/)
+
+<!-- QR code placeholder - to be added -->
+
+<!--
+You can follow along with the presentation at this link.
+-->
+
+---
 transition: slide-left
 level: 2
 ---
@@ -994,7 +1008,254 @@ Same source test, two output formats. RST on the left for projects that publish 
 -->
 
 ---
-transition: slide-left
+
+<h1 text-2xl!>Documentation-Driven Tests</h1>
+
+Write documentation first in Markdown or RST, add executable code blocks to make it a test.
+
+
+<div class="grid grid-cols-2 gap-8" style="--slidev-code-font-size: 0.65rem; --slidev-code-line-height:0.8rem;">
+<div>
+
+```md
+# How to Login to Open edX
+...
+
+## Navigate to Login Page
+
+Go to the login page from the main website.
+
+\```testdoc
+await loginPage.navigate();
+await testdoc.screenshot({
+  title: "Login page loaded"
+});
+\```
+
+## Enter Your Email
+
+Click on the email field and enter your email.
+
+\```testdoc
+await testdoc.fill({
+  selector: 'input[name="emailOrUsername"]',
+  value: 'test@example.com',
+  title: 'Email entered'
+});
+\```
+```
+
+</div>
+<div>
+
+```rst
+How to Login to Open edX
+=========================
+...
+
+Navigate to Login Page
+----------------------
+
+Go to the login page from the main website.
+
+.. testdoc::
+
+   await loginPage.navigate();
+   await testdoc.screenshot({
+     title: "Login page loaded"
+   });
+
+Enter Your Email
+----------------
+
+Click on the email field and enter your email.
+
+.. testdoc::
+
+   await testdoc.fill({
+     selector: 'input[name="emailOrUsername"]',
+     value: 'test@example.com',
+     title: 'Email entered'
+   });
+```
+
+</div>
+</div>
+
+---
+
+<h1 text-2xl!>Documentation-Driven Tests</h1>
+
+<div class="code-lg">
+
+```bash
+# Run all .md and .rst files
+npm run test:doc
+
+# Run specific file (auto-detects format)
+npm run test:doc:file tests/testdoc/login.md
+npm run test:doc:file tests/testdoc/login.rst
+```
+</div>
+
+
+<div class="flex flex-col items-center justify-center">
+
+```mermaid {scale: 0.9}
+flowchart LR
+    A["Write Documentation<br/>login.md or login.rst"] --> B["Parser Extracts<br/>Headings + Code"]
+    B --> C["Playwright<br/>Executes Tests"]
+    C --> D["Enhanced Docs<br/>documentation.md/rst"]
+
+    style A fill:#e3f2fd,stroke:#1976d2,stroke-width:2px,color:#000
+    style D fill:#c8e6c9,stroke:#388e3c,stroke-width:2px,color:#000
+    style C fill:#fff9c4,stroke:#f57c00,stroke-width:2px,color:#000
+    style B fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px,color:#000
+```
+
+</div>
+
+<!--
+Documentation-driven tests flip the script — write human-readable docs first in Markdown or RST, embed testdoc code blocks to execute steps, and get both interactive execution and final documentation from a single source. No duplication, no drift.
+
+The flow is straightforward: you write documentation with embedded testdoc code blocks, the parser extracts headings and code, generates a temporary Playwright test, executes it while capturing screenshots and steps, then produces enhanced documentation that includes the test results.
+-->
+
+
+---
+layout: full
+---
+
+<div class="grid grid-cols-3" style="--slidev-code-font-size: 0.5rem; --slidev-code-line-height:0.625rem;">
+<div class="h-full">
+
+```rst
+How to Login to Open edX
+=========================
+
+This comprehensive guide demonstrates the complete login process for Open edX, showcasing all the key user interface elements and interactions you'll encounter.
+
+Getting Started
+---------------
+
+Before you begin the login process, make sure you have your account credentials ready. You'll need either your email address or username, along with your password.
+
+What You'll Need
+~~~~~~~~~~~~~~~~
+
+To successfully complete this login tutorial, ensure you have:
+
+- A valid Open edX account (if you don't have one, you'll need to register first)
+- Your email address or username
+- Your account password
+- A modern web browser with JavaScript enabled
+- Stable internet connection
+
+Navigate to the Login Page
+---------------------------
+
+The first step is accessing the Open edX login page. You can reach this page in several ways:
+
+- Click the "Sign In" button from the main Open edX website
+- Navigate directly to the login URL
+- Follow a login link from an email invitation
+- Access it through a course enrollment link
+
+1. Login page loaded
+--------------------
+
+The Open edX login page is displayed with all necessary form elements
+
+.. image:: step-01-login-page-loaded.png
+   :alt: Step 1
+
+
+The login page provides a clean, professional interface designed for easy access to your learning environment.
+
+Understanding the Login Form
+-----------------------------
+
+The login form is the central element of the page and contains all the fields you need to authenticate. Take a moment to familiarize yourself with its layout and components.
+
+Form Components
+~~~~~~~~~~~~~~~
+
+The login form includes several important elements:
+
+- **Email/Username field**: Where you enter your login identifier
+- **Password field**: For your secure password entry
+- **Sign In button**: To submit your credentials
+- **Forgot Password link**: For password recovery if needed
+- **Remember me option**: To stay logged in longer (if available)
+
+```
+
+</div>
+<img src="/screenshots/autodoc-doctest.png" alt="Full documentation preview" class="h-full object-contain" />
+<div class="h-full">
+
+```md
+# How to Login to Open edX
+
+This comprehensive guide demonstrates the complete login process for Open edX, showcasing all the key user interface elements and interactions you'll encounter.
+
+## Getting Started
+
+Before you begin the login process, make sure you have your account credentials ready. You'll need either your email address or username, along with your password.
+
+### What You'll Need
+
+To successfully complete this login tutorial, ensure you have:
+
+- A valid Open edX account (if you don't have one, you'll need to register first)
+- Your email address or username
+- Your account password
+- A modern web browser with JavaScript enabled
+- Stable internet connection
+
+## Navigate to the Login Page
+
+The first step is accessing the Open edX login page. You can reach this page in several ways:
+
+- Click the "Sign In" button from the main Open edX website
+- Navigate directly to the login URL
+- Follow a login link from an email invitation
+- Access it through a course enrollment link
+
+### 1. Login page loaded
+
+The Open edX login page is displayed with all necessary form elements
+
+![Step 1](step-01-login-page-loaded.png)
+
+
+
+The login page provides a clean, professional interface designed for easy access to your learning environment.
+
+## Understanding the Login Form
+
+The login form is the central element of the page and contains all the fields you need to authenticate. Take a moment to familiarize yourself with its layout and components.
+
+### Form Components
+
+The login form includes several important elements:
+
+- **Email/Username field**: Where you enter your login identifier
+- **Password field**: For your secure password entry
+- **Sign In button**: To submit your credentials
+- **Forgot Password link**: For password recovery if needed
+- **Remember me option**: To stay logged in longer (if available)
+```
+
+</div>
+</div>
+
+<!--
+The results
+-->
+
+---
+>>>>>>> f2d9977 (feat: add auto doc docs doc)
 layout: api-section
 ---
 
