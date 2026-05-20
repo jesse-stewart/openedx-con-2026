@@ -1401,6 +1401,51 @@ test('login page is accessible', async ({ page }, testInfo) => {
 Two escape hatches you'll reach for eventually. disabledRules silences a specific axe rule — useful when you've reviewed a violation and determined it's a false positive in your context. exclude removes a DOM subtree from the scan entirely — useful for third-party widgets you can't fix.
 -->
 
+
+---
+
+# VPAT Generation
+
+- Automated VPAT (Voluntary Product Accessibility Template) reports from axe-core test results
+- WCAG 2.2 Level A & AA compliance documentation (56 success criteria)
+- Maps axe violations to specific WCAG criteria with conformance levels
+- Generates HTML or Markdown reports for procurement and compliance scenarios
+- Distinguishes between automated testable criteria vs. manual review required
+- Configurable product info via `vpat.config.json` or environment variables
+
+<!--
+VPAT generation transforms your axe-core accessibility test results into standardized compliance reports. These are the documents procurement teams and compliance officers actually need — fully formatted with WCAG 2.2 criteria, conformance levels, and detailed violation mapping. Instead of manually creating VPATs after testing, you run one command and get production-ready HTML or Markdown reports. The tool is smart enough to distinguish between criteria that can be reliably tested by automation versus those that require manual expert review, so the reports are honest about their limitations.
+-->
+
+---
+layout: two-cols
+class: gap-8
+---
+
+# VPAT Generation
+
+HTML Reports
+
+<img src="/screenshots/vpat-html-1.png" alt="VPAT HTML report part 1" class="w-full" />
+
+::right::
+
+<img src="/screenshots/vpat-html-2.png" alt="VPAT HTML report part 2" class="w-full mt-14" />
+
+---
+layout: two-cols-aside
+---
+
+::aside::
+
+<h1 text-2xl!>VPAT Generation</h1>
+
+Markdown or RST output for documentation systems
+
+::default::
+
+<img src="/screenshots/vpat-markdown.png" alt="VPAT Markdown report" class="mx-auto" />
+
 ---
 transition: slide-left
 layout: api-section
