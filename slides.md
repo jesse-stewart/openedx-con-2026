@@ -31,9 +31,13 @@ layout: center
 
 # Follow Along
 
-[https://openedx-con-2026.vercel.app/](https://openedx-con-2026.vercel.app/)
+<div class="text-center">
 
-<!-- QR code placeholder - to be added -->
+[https://openedx-con-2026.vercel.app](https://openedx-con-2026.vercel.app)
+
+</div>
+
+<img src="/qr-slides.png" class="w-64 mt-4 mx-auto" />
 
 <!--
 You can follow along with the presentation at this link.
@@ -201,7 +205,13 @@ Write the test once. Get everything else for (almost) free.
 </div>
 
 <!--
-Four artifacts from one test: the pass/fail signal you already get from Playwright, plus accessibility reports, generated documentation, and visual regression diffs. We'll walk through each one.
+Four artifacts from one test:
+- the pass/fail signal you already get from Playwright
+- plus accessibility reports
+- generated documentation
+- visual regression diffs.
+
+We'll walk through each one.
 -->
 
 ---
@@ -782,15 +792,21 @@ layout: full
 
 <div class="slides-container">
   <div class="vr-slide">
-    <img src="/screenshots/autodoc-steps-rst.png" alt="testdoc steps RST output" class="max-h-100 mx-auto" />
+    <img src="/screenshots/autodoc-steps-rst.png" alt="testdoc steps RST output" />
   </div>
   <div class="vr-slide" v-click="1">
-    <img src="/screenshots/autodoc-steps-md.png" alt="testdoc steps Markdown output" class="max-h-100 mx-auto" />
+    <img src="/screenshots/autodoc-steps-md.png" alt="testdoc steps Markdown output" />
   </div>
   <div class="vr-slide" v-click="2">
-    <img src="/screenshots/autodoc-steps-preview.png" alt="testdoc steps preview" class="max-h-100 mx-auto" />
+    <img src="/screenshots/autodoc-steps-preview.png" alt="testdoc steps preview" />
   </div>
 </div>
+
+<!--
+- RST
+- markdown
+- preview
+-->
 
 ---
 transition: slide-left
@@ -840,7 +856,7 @@ await testdoc.generateRST();       // → documentation.rst
 </div>
 
 <!--
-A few more helpers: screenshot() for arbitrary captures that aren't tied to an interaction, note() for callouts that show up as admonitions in the output, and generate() to emit the final file in either Markdown or RST.
+A few more helpers: screenshot() for arbitrary captures that aren't tied to an interaction, note() for callout, and generate() to emit the final file in either Markdown or RST.
 -->
 
 ---
@@ -850,13 +866,13 @@ layout: full
 
 <div class="slides-container">
   <div class="vr-slide">
-    <img src="/screenshots/autodoc-screenshots-rst.png" alt="testdoc screenshots RST output" class="max-h-100 mx-auto" />
+    <img src="/screenshots/autodoc-screenshots-rst.png" alt="testdoc screenshots RST output" />
   </div>
   <div class="vr-slide" v-click="1">
-    <img src="/screenshots/autodoc-screenshots-md.png" alt="testdoc screenshots Markdown output" class="max-h-100 mx-auto" />
+    <img src="/screenshots/autodoc-screenshots-md.png" alt="testdoc screenshots Markdown output" />
   </div>
   <div class="vr-slide" v-click="2">
-    <img src="/screenshots/autodoc-screenshots-preview.png" alt="testdoc screenshots preview" class="max-h-100 mx-auto" />
+    <img src="/screenshots/autodoc-screenshots-preview.png" alt="testdoc screenshots preview" />
   </div>
 </div>
 
@@ -942,7 +958,7 @@ Related Topics
 ```
 
 </div>
-<img src="/screenshots/autodoc-full-preview.png" alt="Full documentation preview" class="h-full object-contain" />
+<img src="/screenshots/autodoc-full-preview.png" alt="Full documentation preview" />
 <div class="h-full">
 
 ```md
@@ -1082,6 +1098,10 @@ Click on the email field and enter your email.
 </div>
 </div>
 
+<!--
+Documentation-driven tests flip the script — write human-readable docs first in Markdown or RST, embed testdoc code blocks to execute steps, and get both interactive execution and final documentation from a single source.
+-->
+
 ---
 
 <h1 text-2xl!>Documentation-Driven Tests</h1>
@@ -1116,11 +1136,8 @@ flowchart LR
 </div>
 
 <!--
-Documentation-driven tests flip the script — write human-readable docs first in Markdown or RST, embed testdoc code blocks to execute steps, and get both interactive execution and final documentation from a single source. No duplication, no drift.
-
 The flow is straightforward: you write documentation with embedded testdoc code blocks, the parser extracts headings and code, generates a temporary Playwright test, executes it while capturing screenshots and steps, then produces enhanced documentation that includes the test results.
 -->
-
 
 ---
 layout: full
@@ -1191,7 +1208,7 @@ The login form includes several important elements:
 ```
 
 </div>
-<img src="/screenshots/autodoc-doctest.png" alt="Full documentation preview" class="h-full object-contain" />
+<img src="/screenshots/autodoc-doctest.png" alt="Full documentation preview" />
 <div class="h-full">
 
 ```md
@@ -1255,7 +1272,6 @@ The results
 -->
 
 ---
->>>>>>> f2d9977 (feat: add auto doc docs doc)
 layout: api-section
 ---
 
@@ -1293,7 +1309,7 @@ console.table({
 </div>
 
 <!--
-The lowest-level primitive: checkA11y runs the scan and returns a results object. It never throws, so you can build custom assertions or just log the counts.
+The lowest-level primitive: checkA11y runs the scan and returns a results object. It never throws, so you can build custom assertions or just log to the console.
 -->
 
 ---
@@ -1414,7 +1430,7 @@ Two escape hatches you'll reach for eventually. disabledRules silences a specifi
 - Configurable product info via `vpat.config.json` or environment variables
 
 <!--
-VPAT generation transforms your axe-core accessibility test results into standardized compliance reports. These are the documents procurement teams and compliance officers actually need — fully formatted with WCAG 2.2 criteria, conformance levels, and detailed violation mapping. Instead of manually creating VPATs after testing, you run one command and get production-ready HTML or Markdown reports. The tool is smart enough to distinguish between criteria that can be reliably tested by automation versus those that require manual expert review, so the reports are honest about their limitations.
+VPAT generation transforms your axe-core accessibility test results into standardized compliance reports. These are the documents procurement teams and compliance officers actually need — fully formatted with WCAG 2.2 criteria, conformance levels, and detailed violation mapping. Instead of manually creating VPATs after testing, you run one command and get HTML or Markdown reports.
 -->
 
 ---
@@ -1432,6 +1448,10 @@ HTML Reports
 
 <img src="/screenshots/vpat-html-2.png" alt="VPAT HTML report part 2" class="w-full mt-14" />
 
+<!--
+The tool is smart enough to distinguish between criteria that can be reliably tested by automation versus those that require manual expert review, so the reports are honest about their limitations.
+-->
+
 ---
 layout: two-cols-aside
 ---
@@ -1445,6 +1465,10 @@ Markdown or RST output for documentation systems
 ::default::
 
 <img src="/screenshots/vpat-markdown.png" alt="VPAT Markdown report" class="mx-auto" />
+
+<!--
+These reports can be generated as HTML, RST, or Markdown.
+-->
 
 ---
 transition: slide-left
@@ -1644,6 +1668,8 @@ layout: full
 
 <!--
 And here's what a basic comparison looks like — baseline, current, diff.
+
+You will notice that the dynamic content like the greeting and timestamp will fail the visual regression test, even when the app is functioning as expected.
 -->
 
 ---
@@ -1694,7 +1720,7 @@ test('instructor dashboard looks right', async ({ page }, testInfo) => {
 </div>
 
 <!--
-- hide dynamic content like timestamps or personalized greetings that would otherwise create false positives.
+hide dynamic content like timestamps or personalized greetings that would otherwise create false positives.
 -->
 
 ---
@@ -1756,7 +1782,7 @@ Need variable-width element in your screenshots? Use `mask` with coordinates ins
 </div>
 
 <!--
-The key distinction: hide sets opacity zero via CSS, so those elements are invisible in your screenshots—use it for variable-width content like timestamps or user names. Mask fills a region with gray before comparison but doesn't change the screenshot itself—use it for fixed regions you want to completely ignore, like ads or avatars. hide changes what you see, mask changes what you compare.
+The key distinction: hide sets opacity zero via CSS, so those elements are invisible in your screenshots—use it for variable-width content like timestamps or user names. Mask fills a region with gray before comparison but doesn't change the screenshot itself—use it for fixed regions you want to completely ignore.
 -->
 
 ---
@@ -1901,7 +1927,7 @@ layout: full
 </div>
 
 <!--
-And here's what a basic comparison looks like — baseline, current, diff.
+Same example from before with a lower threshold setting.
 -->
 
 ---
@@ -1986,6 +2012,10 @@ await expect(page).toHaveURL(/pattern/)
 
 </div>
 
+<!--
+Here are some common playwright helpers to help you along the way.
+-->
+
 ---
 transition: slide-left
 layout: api-section
@@ -1994,7 +2024,7 @@ layout: api-section
 # Wrapping up
 
 <!--
-That's the whole API. Before I wrap up, a few honest gaps and a pitch to contribute.
+Wrapping up
 -->
 
 ---
@@ -2042,7 +2072,14 @@ Can we run tests against mock data and database data?
 </div>
 
 <!--
-A few things this doesn't solve yet. How do we seed the test environment with the data our tests rely on? How do we clean up reliably after a run? And can we exercise the same tests against both real backends and mocked data? Open questions — I'd love to hear how you're solving them.
+New problems!
+
+A few things this doesn't solve yet.
+- How do we seed the test environment with the data our tests rely on?
+- How do we clean up reliably after a run?
+- And can we exercise the same tests against both real backends and mocked data?
+
+Open questions — I'd love to hear how you're solving them.
 -->
 
 ---
@@ -2070,7 +2107,7 @@ Jesus is a **Senior Software Engineer** at **Western Governors University** with
 </div>
 
 <!--
-Before I wrap up — a quick thank you to Jesus Balderrama for his contributions to the library. This is a community effort and it's better because of people willing to dig in and contribute.
+A quick thank you to Jesus Balderrama (bal-deh-RAH-mah) for his contributions to the library. This is a community effort and it's better because of people willing to dig in and contribute.
 -->
 
 ---
