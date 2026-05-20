@@ -2164,6 +2164,10 @@ layout: api-section
 
 Questions? Feedback? Find me after the talk.
 
+<a href="mailto:jesse@jessestewart.com">jesse@jessestewart.com</a> &nbsp;&nbsp;&nbsp;
+<a href="http://www.jessestewart.com">www.jessestewart.com</a>
+
+
 <img src="/beyond-test-coverage-e2e-a11y-documentation-an_stewart-balderrama_1177129_feedback-code.png" class="w-64 mt-4 -mb-10vh" />
 
 <!--
